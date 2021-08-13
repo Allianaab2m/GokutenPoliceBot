@@ -8,4 +8,6 @@ load_dotenv()
 DISCORD_BOT_TOKEN = getenv("DISCORD_BOT_TOKEN")
 
 # bot profile
-BOT_PREFIX = "?"
+BOT_PREFIX = "gp."
+
+SPREADSHEET_KEY = '12l3Fn5R_xU836y1Q877VpzPFj6yj4xPyNEuqIXdNf5o'
