@@ -20,10 +20,16 @@ class Open(Cog):
             channel_name: str = f"{ctx.author.name}の部屋"
         else:
             channel_name = name
+
         if maked_role in ctx.author.roles:
             await ctx.reply(f"すでに個人部屋を作成しているようです。")
+
         else:
-            await ctx.guild.create_text_channel(channel_name, category=category)
+            overwrites = {
+                ctx.guild.default_role: discord.PermissionOverwrite(manage_channels=False),
+                ctx.author: discord.PermissionOverwrite(manage_channels=True)
+            }
+            await ctx.guild.create_text_channel(channel_name, category=category, overwrites=overwrites)
             await ctx.reply(f"{channel_name}を作成しました。")
             await ctx.author.add_roles(maked_role)
 
