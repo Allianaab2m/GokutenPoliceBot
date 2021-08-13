@@ -1,4 +1,5 @@
 import random
+import time
 
 from discord.ext.commands import Bot, Cog, Context, command
 
@@ -15,6 +16,10 @@ class Slot(Cog):
     async def slot(self, ctx: Context) -> None:
         """スロットを実行します。"""
         if ctx.channel.id != 868404450790891530:
+            error_mes = await ctx.send("専用チャンネルで投稿してください。このメッセージは5秒後に削除されます。")
+            time.sleep(5)
+            await ctx.message.delete()
+            await error_mes.delete()
             return
 
         author_name = str(ctx.author)
