@@ -1,6 +1,7 @@
-from discord import Message
-from discord.ext.commands import Bot, Cog, Context, command
 import random
+
+from discord.ext.commands import Bot, Cog, Context, command
+
 from sheets import sheet
 
 
@@ -13,6 +14,9 @@ class Slot(Cog):
     @command()
     async def slot(self, ctx: Context) -> None:
         """スロットを実行します。"""
+        if ctx.channel.id != 868404450790891530:
+            return
+
         author_name = str(ctx.author)
         worksheet = sheet.sheet_setup('slotresult')  # sheet_setup関数でslotresultシートを指定
         name_cell = worksheet.find(author_name)  # すでに登録済かチェック
