@@ -1,0 +1,14 @@
+{
+  "install": "python3 -m pip install discord.py python-dotenv gspread oauth2client",
+  "start": "PYTHONUNBUFFERED=true python3 launcher.py",
+  "watch": {
+    "ignore": ["\\.pyc$"],
+    "install": {
+      "include": ["^requirements\\.txt$"]
+    },
+    "restart": {
+      "include": ["\\.py$", "^start\\.sh"]
+    },
+    "throttle": 1000
+  }
+}
