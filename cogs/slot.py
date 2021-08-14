@@ -1,6 +1,7 @@
 import random
 import time
 
+import discord
 from discord.ext.commands import Bot, Cog, Context, command
 
 from sheets import sheet
@@ -16,7 +17,10 @@ class Slot(Cog):
     async def slot(self, ctx: Context) -> None:
         """スロットを実行します。"""
         if ctx.channel.id != 868404450790891530:
-            error_mes = await ctx.send("専用チャンネルで投稿してください。このメッセージは5秒後に削除されます。")
+            error_embed = discord.Embed(title="エラー",
+                                        description="専用チャンネルで投稿してください。このメッセージは5秒後に削除されます。",
+                                        color=0xff0000)
+            error_mes = await ctx.reply(embed=error_embed)
             time.sleep(5)
             await ctx.message.delete()
             await error_mes.delete()
@@ -39,11 +43,15 @@ class Slot(Cog):
             slot_result: list = random.choices(SLOT_STAT, k=3)
             if slot_result[0] == slot_result[1] == slot_result[2]:
                 cell_value: int = point_cell_value + 100
-                await ctx.reply(f"{slot_result}\n当たり！現在のポイント数:{cell_value}")
+                result_embed = discord.Embed(title="当たり！",
+                                             description=f"現在のポイント数:{cell_value}")
+                await ctx.reply(embed=result_embed)
                 worksheet.update_cell(name_cell.row, name_cell.col+1, f"{cell_value}")
             else:
                 cell_value: int = point_cell_value - 10
-                await ctx.reply(f"{slot_result}\nハズレ 現在のポイント数:{cell_value}")
+                result_embed = discord.Embed(title="ハズレ",
+                                             description=f"現在のポイント数:{cell_value}")
+                await ctx.reply(embed=result_embed)
                 worksheet.update_cell(name_cell.row, name_cell.col+1, f"{cell_value}")
 
         await slot_sys()
