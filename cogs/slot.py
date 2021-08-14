@@ -39,7 +39,7 @@ class Slot(Cog):
         point_cell_value = int(worksheet.cell(name_cell.row, name_cell.col+1).value)
 
         async def slot_sys() -> None:
-            SLOT_STAT: list = ["1", "2", "3", "4", "5"]
+            SLOT_STAT: list = ["🍐", "🫀", "🌚", "🍭", "💩"]
             slot_result: list = random.choices(SLOT_STAT, k=3)
             if slot_result[0] == slot_result[1] == slot_result[2]:
                 cell_value: int = point_cell_value + 100
