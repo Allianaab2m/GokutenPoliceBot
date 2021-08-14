@@ -20,11 +20,25 @@ class Open(Cog):
             channel_name: str = f"{ctx.author.name}の部屋"
         else:
             channel_name = name
+
         if maked_role in ctx.author.roles:
-            await ctx.reply(f"すでに個人部屋を作成しているようです。")
+            error_embed = discord.Embed(title="エラー",
+                                        description=f"すでに個人部屋を作成しているようです。",
+                                        color=0xff0000)
+            error_embed.set_footer(text="個人部屋を削除した場合にも，このメッセージが表示される場合があります。")
+            await ctx.reply(embed=error_embed)
+
         else:
-            await ctx.guild.create_text_channel(channel_name, category=category)
-            await ctx.reply(f"{channel_name}を作成しました。")
+            overwrites = {
+                ctx.guild.default_role: discord.PermissionOverwrite(manage_channels=False),
+                ctx.author: discord.PermissionOverwrite(manage_channels=True)
+            }
+            await ctx.guild.create_text_channel(channel_name, category=category, overwrites=overwrites)
+            ok_embed = discord.Embed(title="個人部屋作成",
+                                     description=f"{channel_name}を作成しました。",
+                                     color=0x51ff00)
+            ok_embed.set_footer(text="自分で作成した個人部屋にのみ，チャンネルの編集権限が与えられています。チャンネルの名前の変更や削除を行えます。")
+            await ctx.reply(embed=ok_embed)
             await ctx.author.add_roles(maked_role)
 
 

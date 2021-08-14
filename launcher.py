@@ -1,20 +1,21 @@
 from pathlib import Path
 from traceback import print_exc
 
+import discord
 from discord.ext.commands import Bot, when_mentioned_or
 
 import const
 
 
 # https://discordpy.readthedocs.io/ja/latest/intents.html
-# from discord import Intents
+from discord import Intents
 
 
 class MyBot(Bot):
     def __init__(self) -> None:
         super().__init__(
             command_prefix=when_mentioned_or(const.BOT_PREFIX),
-            # intents=Intents.all()
+            intents=Intents.all()
         )
         print("Launching...")
 
@@ -27,6 +28,7 @@ class MyBot(Bot):
 
     async def on_ready(self) -> None:
         print(f"Logged in as: {self.user}")
+        await bot.change_presence(activity=discord.Game(name="A.I.M.$"))
 
 
 if __name__ == "__main__":
