@@ -138,4 +138,4 @@ dmypy.json
 .idea/
 
 # sheets
-sheets/gcpkey.json
+.data/gcpkey.json
