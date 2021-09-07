@@ -16,6 +16,8 @@ class Slot(Cog):
     @command()
     async def slot(self, ctx: Context) -> None:
         """スロットを実行します。"""
+        if ctx.author.bot:
+            return
         if ctx.channel.id != 868404450790891530:
             error_embed = discord.Embed(title="エラー",
                                         description="専用チャンネルで投稿してください。このメッセージは5秒後に削除されます。",
